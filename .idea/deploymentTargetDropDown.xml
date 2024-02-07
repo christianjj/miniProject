@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="deploymentTargetDropDown">
+    <value>
+      <entry key="MainTest">
+        <State />
+      </entry>
+      <entry key="RoomDatabaseTest">
+        <State />
+      </entry>
+      <entry key="TestApiIsolation">
+        <State />
+      </entry>
+      <entry key="app">
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\thegr\.android\avd\Pixel_4_API_30.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-02-06T00:20:54.052326800Z" />
+        </State>
+      </entry>
+      <entry key="insertData_insert_resultSuccess()">
+        <State />
+      </entry>
+    </value>
+  </component>
+</project>

@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Android Technical Project</string>
+    <string name="deleted_message">Successfully Deleted</string>
+    <string name="updated_message">Successfully Updated</string>
+    <string name="added_message">Successfully Added</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="dialog_ask_delete_title">Delete %1$s?</string>
+    <string name="dialog_ask_delete_message">Are you sure you want to delete %1$s?</string>
+    <string name="add">Add</string>
+    <string name="update">Update</string>
+    <string name="must_fill_up_all_the_fields">must fill up all the fields</string>
+</resources>
