@@ -34,6 +34,7 @@ class CategoryListFragment : Fragment(), MealsCategoriesView {
     private lateinit var mAdapter: MealsAdapter
     private lateinit var dialog : BottomSheetDialog
     private lateinit var progressBarHandler: ProgressBarHandler
+    private val existingName = listOf("christian", "chan")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -238,8 +239,8 @@ class CategoryListFragment : Fragment(), MealsCategoriesView {
             .isNotEmpty() && link.toString().isNotEmpty()
     }
 
-    fun checkInputsIfNotEmpty(name: String?): Boolean {
-        return name.toString().isNotEmpty()
+    fun checkInputsIfNotEmpty(name: String?, description: String?, url: String?): Boolean {
+        return name.toString().isNotEmpty() && description.toString().isNotEmpty() && url.toString().isNotEmpty()
     }
 }
 

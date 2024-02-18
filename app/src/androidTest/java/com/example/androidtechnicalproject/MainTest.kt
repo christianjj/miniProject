@@ -5,9 +5,10 @@ import com.example.androidtechnicalproject.apiTest.TestApiIsolation
 import org.junit.runner.RunWith
 import org.junit.runners.Suite
 
+
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
     RoomDatabaseTest::class,
-    TestApiIsolation::class
+    TestApiIsolation::class,
 )
 class MainTest

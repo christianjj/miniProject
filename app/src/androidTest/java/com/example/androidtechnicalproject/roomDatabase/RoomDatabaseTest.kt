@@ -42,52 +42,65 @@ class RoomDatabaseTest: TestCase() {
 
     @Test
      fun insertData_insert_resultInserted(){
-        val categoryItem = MealsCategory(id = 1, strCategory = "test1", strCategoryDescription = "testdescription", strCategoryThumb = "someurl")
+        val categoryItem = MealsCategory(id = 1, strCategory = "test1", strCategoryDescription = "testdescription",  timeStamp = 10000, strCategoryThumb = "someurl")
          runBlocking {
-            categoriesDao.addCategory(categoryItem)
-        }
-        val retrieve = categoryDatabase.categoryDao().readAll()
-        Assert.assertEquals(retrieve.isNotEmpty(), true)
-        Log.d("insert Data: " ,"$retrieve")
+             categoriesDao.addCategory(categoryItem)
+             val retrieve = categoryDatabase.categoryDao().readAll()
+             Assert.assertEquals(retrieve.isNotEmpty(), true)
+
+             Log.d("insert Data: ", "$retrieve")
+         }
     }
 
     @Test
-    fun deleteData_delete_resultEmpty(){
-        val categoryItem = MealsCategory(id = 1, strCategory = "test1", strCategoryDescription = "testdescription", strCategoryThumb = "someurl")
+     fun deleteData_delete_resultEmpty(){
+        val categoryItem = MealsCategory(id = 1, strCategory = "test1", strCategoryDescription = "testdescription", timeStamp = 10000, strCategoryThumb = "someurl")
         runBlocking {
             categoriesDao.addCategory(categoryItem)
-        }
-        val retrieveInsert = categoryDatabase.categoryDao().readAll()
-        Assert.assertTrue(retrieveInsert.size == 1)
-        Log.d("Insert Data: " ,"remaining: $retrieveInsert")
-        runBlocking {
-            categoriesDao.deleteCategory(categoryItem)
-        }
 
-        val retrieve = categoryDatabase.categoryDao().readAll()
-        Assert.assertTrue(retrieve.isEmpty())
-        Log.d("Delete Data: ", "remaining: $retrieve")
+            val retrieveInsert = categoryDatabase.categoryDao().readAll()
+            Assert.assertTrue(retrieveInsert.size == 1)
+            Log.d("Insert Data: ", "remaining: $retrieveInsert")
+            runBlocking {
+                categoriesDao.deleteCategory(categoryItem)
+            }
+
+            val retrieve = categoryDatabase.categoryDao().readAll()
+            Assert.assertTrue(retrieve.isEmpty())
+            Log.d("Delete Data: ", "remaining: $retrieve")
+        }
     }
 
 
     @Test
-    fun updateData_update_resultUpdatedStrCategory(){
-        val categoryItem = MealsCategory(id = 1, strCategory = "test1", strCategoryDescription = "testdescription", strCategoryThumb = "someurl")
+     fun updateData_update_resultUpdatedStrCategory(){
+        val categoryItem = MealsCategory(id = 1, strCategory = "test1", strCategoryDescription = "testdescription", timeStamp = 10000, strCategoryThumb = "someurl")
         runBlocking {
             categoriesDao.addCategory(categoryItem)
+
+            val retrieveInsert = categoryDatabase.categoryDao().readAll()
+            Assert.assertTrue(retrieveInsert.size == 1)
+            Log.d("Insert Data: ", "remaining: $retrieveInsert")
+
+
+            runBlocking {
+                categoriesDao.updateCategory(
+                    MealsCategory(
+                        id = 1,
+                        strCategory = "test2",
+                        strCategoryDescription = "testdescription",
+                        timeStamp = 10000,
+                        strCategoryThumb = "someurl"
+                    )
+                )
+            }
+
+            val retrieve = categoryDatabase.categoryDao().readAll()
+            Assert.assertTrue(retrieve[0].strCategory == "test2")
+            Log.d("Update Data: ", "${retrieve[0]}")
         }
-        val retrieveInsert = categoryDatabase.categoryDao().readAll()
-        Assert.assertTrue(retrieveInsert.size == 1)
-        Log.d("Insert Data: " ,"remaining: $retrieveInsert")
-
-
-        runBlocking {
-            categoriesDao.updateCategory(MealsCategory(id = 1, strCategory = "test2", strCategoryDescription = "testdescription", strCategoryThumb = "someurl"))
-        }
-
-        val retrieve = categoryDatabase.categoryDao().readAll()
-        Assert.assertTrue(retrieve[0].strCategory == "test2")
-        Log.d("Update Data: ", "${retrieve[0]}")
     }
+
+
 
 }
