@@ -14,5 +14,6 @@ data class MealsCategory(
     val id: Int,
     val strCategory: String,
     val strCategoryDescription: String,
+    val timeStamp: Long,
     val strCategoryThumb: String
 ):Parcelable

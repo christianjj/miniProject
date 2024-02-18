@@ -1,5 +1,6 @@
 package com.example.androidtechnicalproject
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.androidtechnicalproject.base.BaseActivity
@@ -18,6 +19,8 @@ class MainActivity : BaseActivity() {
         setContentView(view)
 
         addFragment(CategoryListFragment())
+
+
     }
 
 

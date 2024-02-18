@@ -19,17 +19,18 @@ class RetrofitBuilder {
             .connectTimeout(5, TimeUnit.MINUTES)
             .readTimeout(5, TimeUnit.MINUTES)
             .addInterceptor(LoggingInterceptor()).build()
-
-        val gson = GsonBuilder()
-            .setDateFormat("dd/MM/yyyy HH:mm:ss")
-            .setDateFormat("dd/MM/yyyy")
-            .setLenient()
-            .create()
+//
+//        val gson = GsonBuilder()
+//            .setDateFormat("dd/MM/yyyy HH:mm:ss")
+//            .setDateFormat("dd/MM/yyyy")
+//            .setLenient()
+//            .create()
         return Retrofit.Builder()
             .baseUrl(ApiEndPoint.BASE_URL)
             .client(client)
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
+
     }
 
 

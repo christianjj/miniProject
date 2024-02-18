@@ -8,10 +8,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.androidtechnicalproject.R
 import com.example.androidtechnicalproject.databinding.ListOfCategoryBinding
+import com.example.androidtechnicalproject.localdatabase.CategoriesDao
+import com.example.androidtechnicalproject.localdatabase.CategoryDatabase
 import com.example.androidtechnicalproject.module.MealsAdapter
 import com.example.androidtechnicalproject.module.MealsPresenter
 import com.example.androidtechnicalproject.module.MealsCategoriesView
@@ -19,6 +23,8 @@ import com.example.androidtechnicalproject.model.MealsCategory
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.rogomi.atlasfx.common.ProgressBarHandler
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 
 class CategoryListFragment : Fragment(), MealsCategoriesView {
 
@@ -28,9 +34,12 @@ class CategoryListFragment : Fragment(), MealsCategoriesView {
     private lateinit var mAdapter: MealsAdapter
     private lateinit var dialog : BottomSheetDialog
     private lateinit var progressBarHandler: ProgressBarHandler
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mPresenter = MealsPresenter(this)
+        val categoriesDao: CategoriesDao = CategoryDatabase.getDatabase(requireContext()).categoryDao()
+        mPresenter = MealsPresenter(this, categoriesDao)
         progressBarHandler =ProgressBarHandler(requireContext())
 
     }
@@ -63,9 +72,14 @@ class CategoryListFragment : Fragment(), MealsCategoriesView {
             }
             addCategory.setOnClickListener {
                 showBottomSheet(Type.Add, null)
+
+//                val intent = Intent(requireContext(), Newactivity::class.java)
+//                startActivity(intent)
+
             }
 
         }
+
 
     }
 
@@ -105,12 +119,18 @@ class CategoryListFragment : Fragment(), MealsCategoriesView {
         binding.rvList.adapter = mAdapter
     }
 
+    override fun getLifecycleCoroutineScope(io: CoroutineDispatcher): CoroutineScope {
+        return viewLifecycleOwner.lifecycleScope
+    }
+
     override fun onGetMeals(data: List<MealsCategory>) {
         //Log.d("mealsREsponse", data.toString())
          binding.swipeRefreshLayout.isRefreshing = false
-
-            for (s in data) {
-                insertDataToDatabase(s)
+            var newdata  = mutableListOf<MealsCategory>()
+            newdata.addAll(data)
+            for (s in newdata) {
+                insertDataToDatabase(MealsCategory(s.id,s.strCategory,s.strCategoryDescription,
+                    System.currentTimeMillis(),s.strCategoryThumb))
             }
 
         //mAdapter.initialize(data)
@@ -139,6 +159,12 @@ class CategoryListFragment : Fragment(), MealsCategoriesView {
 
     }
 
+    override fun onStop() {
+        super.onStop()
+        mPresenter.cancelFetch()
+        binding.swipeRefreshLayout.isRefreshing = false
+    }
+
     private fun showBottomSheet(type: Type, data: MealsCategory?) {
 
         val dialogView = layoutInflater.inflate(R.layout.bottom_sheet_category, null)
@@ -153,6 +179,7 @@ class CategoryListFragment : Fragment(), MealsCategoriesView {
         when (type) {
             Type.Add -> {
                 button.text = getString(R.string.add)
+                btnDelete.isVisible = false
             }
 
             Type.Update -> {
@@ -175,6 +202,7 @@ class CategoryListFragment : Fragment(), MealsCategoriesView {
                             0,
                             name.text.toString(),
                             description.text.toString(),
+                            System.currentTimeMillis(),
                             link.text.toString()
                         )
                     )){
@@ -188,6 +216,7 @@ class CategoryListFragment : Fragment(), MealsCategoriesView {
                             data!!.id,
                             name.text.toString(),
                             description.text.toString(),
+                            System.currentTimeMillis(),
                             link.text.toString()
                         )
                     )
