@@ -11,4 +11,4 @@ import org.junit.runners.Suite
     RoomDatabaseTest::class,
     TestApiIsolation::class,
 )
-class MainTest
+class AndroidTestMain

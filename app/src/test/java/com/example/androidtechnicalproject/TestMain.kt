@@ -10,4 +10,4 @@ import org.junit.runners.Suite
 @Suite.SuiteClasses(
     CategoryListFragmentTest::class
 )
-class MainTest
+class TestMain

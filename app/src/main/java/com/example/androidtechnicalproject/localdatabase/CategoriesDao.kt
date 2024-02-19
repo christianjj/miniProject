@@ -17,10 +17,6 @@ interface CategoriesDao {
     @Query("SELECT * FROM local_category ORDER BY id ASC")
     fun readAllData(): LiveData<List<MealsCategory>>
 
-    //Test for easy retrieval
-    @Query("SELECT * FROM local_category ORDER BY id ASC")
-    suspend fun readAll(): List<MealsCategory>
-
     @Query("SELECT * FROM local_category ORDER BY timestamp DESC LIMIT 1")
     suspend fun getLatestCategory(): MealsCategory?
 
