@@ -34,7 +34,6 @@ class CategoryListFragment : Fragment(), MealsCategoriesView {
     private lateinit var mAdapter: MealsAdapter
     private lateinit var dialog : BottomSheetDialog
     private lateinit var progressBarHandler: ProgressBarHandler
-    private val existingName = listOf("christian", "chan")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
